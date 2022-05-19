@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  app:
+    container_name: "api"
+    build: .
+    ports:
+      - 8000:8000
+    depends_on:
+      - mongo
+      - selenium
+      
+    volumes:
+      - .:/fastapi-app
+    
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - 27017:27017
+    volumes:
+      - .data :/data/db
+  mongo-express:
+    image: mongo-express
+    depends_on:
+      - mongo
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+  selenium:
+    container_name: selenium
+    image: selenium/standalone-chrome-debug
+    ports:
+      - "4444:4444"
+    shm_size: 128M

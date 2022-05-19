@@ -1,0 +1,12 @@
+
+fastapi==0.78.0
+numpy 
+pymongo==4.1.1
+requests 
+selenium==4.1.5
+uvicorn==0.17.6
+wget==3.2
+webdriver_manager==3.5.2
+bs4
+lxml
+
